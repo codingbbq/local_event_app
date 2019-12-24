@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:local_events_app/app_state.dart';
 import 'package:local_events_app/models/category.dart';
 import 'package:local_events_app/models/event.dart';
+import 'package:local_events_app/ui/event_details/event_details_page.dart';
 import 'package:local_events_app/ui/home/category_widget.dart';
 import 'package:local_events_app/ui/home/home_background.dart';
 import 'package:provider/provider.dart';
@@ -69,7 +70,17 @@ class HomePage extends StatelessWidget {
                       child: Consumer<AppState>(
                         builder: (context, appState, _) => Column(
                           children: <Widget>[
-                            for(final event in events.where((e) => e.categoryIds.contains(appState.selectedCategoryId))) EventWidget(event: event)
+                            for(final event in events.where((e) => e.categoryIds.contains(appState.selectedCategoryId))) 
+                              GestureDetector(
+                                onTap: (){
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) => EventDetailsPage(event: event),
+                                    )
+                                  );
+                                },
+                                child: EventWidget(event: event),
+                              )
                           ],
                         )
                       ),
